@@ -128,6 +128,40 @@
             }
         }
         fetchCharacterData();
+
+        async function fetchNotionData() {
+            const token = 'YOUR_NOTION_API_TOKEN'; // Reemplaza con tu token de Notion
+            const url = 'https://api.notion.com/v1/databases/1bc1e333a8dc8080a8c9cb06c4b609d4/query';
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Notion-Version': '2022-06-28',
+                'Content-Type': 'application/json'
+            };
+            const body = JSON.stringify({
+                "sorts": [
+                    {
+                        "property": "ID",
+                        "direction": "ascending"
+                    }
+                ]
+            });
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: headers,
+                    body: body
+                });
+                const data = await response.json();
+                console.log(data);
+                // Aquí puedes manejar los datos obtenidos de Notion
+            } catch (error) {
+                console.error('Error fetching Notion data:', error);
+            }
+        }
+
+        // Llamar a la función para probarla
+        fetchNotionData();
     </script>
 </body>
 </html>
